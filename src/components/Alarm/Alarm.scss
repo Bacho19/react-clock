@@ -1,0 +1,22 @@
+.alarm {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+  &-text {
+    font-size: 32px;
+    color: rgb(59, 59, 59);
+    text-align: center;
+  }
+  &-selectors {
+    display: flex;
+    justify-content: center;
+  }
+  &-set {
+    background-color: #fff;
+    border-radius: 4px;
+    &__message {
+      padding: 14px 12px;
+      font-size: 18px;
+    }
+  }
+}
