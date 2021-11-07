@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import Select from "react-select";
+import Button from "../Button/Button";
+import AlarmModal from "../AlarmModal/AlarmModal";
 import "./Alarm.scss";
+import classicAlarm from "classic-alarm.mp3";
 
 const hourOptions = [];
 const minuteOptions = [];
@@ -23,6 +26,7 @@ const Alarm = ({ clockDate }) => {
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [isSet, setIsSet] = useState(false);
+  const [alarmModalIsOpen, setAlarmModalIsOpen] = useState(false);
 
   const handleHours = (selectedHours) => {
     setHours(selectedHours);
@@ -44,13 +48,21 @@ const Alarm = ({ clockDate }) => {
     setMinutes(0);
   };
 
+  const handleCloseModal = () => {
+    setAlarmModalIsOpen((state) => !state);
+  };
+
+  const alarmAudio = new Audio(classicAlarm);
+
   if (
     clockDate.hours === hours.value &&
     clockDate.minutes === minutes.value &&
     clockDate.seconds === 0 &&
     isSet
   ) {
-    console.log("Alarm!..");
+    alarmAudio.play();
+    setAlarmModalIsOpen(true);
+    handleResetAlarm();
   }
 
   return (
@@ -72,9 +84,11 @@ const Alarm = ({ clockDate }) => {
             placeholder="Minutes"
             isDisabled={isSet}
           />
-          <button onClick={handleSetAlarm} disabled={isSet}>
-            Set
-          </button>
+          <div className="alarm-selectors__setButton">
+            <Button onClick={handleSetAlarm} disabled={isSet}>
+              Set
+            </Button>
+          </div>
         </div>
         {isSet && (
           <div className="alarm-set">
@@ -83,8 +97,16 @@ const Alarm = ({ clockDate }) => {
             </p>
           </div>
         )}
-        {isSet && <button onClick={handleResetAlarm}>Reset</button>}
+        {isSet && (
+          <div className="alarm-reset">
+            <Button onClick={handleResetAlarm}>Reset</Button>
+          </div>
+        )}
       </div>
+      <AlarmModal
+        alarmModalIsOpen={alarmModalIsOpen}
+        handleCloseModal={handleCloseModal}
+      />
     </div>
   );
 };

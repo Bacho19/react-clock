@@ -3,7 +3,7 @@ import "./AnalogClock.scss";
 
 const AnalogClock = ({ clockDate, setClockDate }) => {
   useLayoutEffect(() => {
-    setInterval(() => {
+    const interval = setInterval(() => {
       const date = new Date();
       setClockDate({
         seconds: date.getSeconds(),
@@ -11,6 +11,9 @@ const AnalogClock = ({ clockDate, setClockDate }) => {
         hours: date.getHours(),
       });
     }, 1000);
+    return () => {
+      clearInterval(interval);
+    };
   }, [setClockDate]);
 
   const secondClock = clockDate.seconds * 6 - 90;

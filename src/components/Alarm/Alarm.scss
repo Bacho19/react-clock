@@ -10,6 +10,10 @@
   &-selectors {
     display: flex;
     justify-content: center;
+    align-items: center;
+    &__setButton {
+      margin-left: 8px;
+    }
   }
   &-set {
     background-color: #fff;
@@ -18,5 +22,9 @@
       padding: 14px 12px;
       font-size: 18px;
     }
+  }
+  &-reset {
+    display: flex;
+    justify-content: center;
   }
 }
