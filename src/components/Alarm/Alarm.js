@@ -3,7 +3,7 @@ import Select from "react-select";
 import Button from "../Button/Button";
 import AlarmModal from "../AlarmModal/AlarmModal";
 import "./Alarm.scss";
-import classicAlarm from "classic-alarm.mp3";
+import classicAlarm from "../../static/classic-alarm.mp3";
 
 const hourOptions = [];
 const minuteOptions = [];

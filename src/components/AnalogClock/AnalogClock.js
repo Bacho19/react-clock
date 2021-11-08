@@ -6,9 +6,9 @@ const AnalogClock = ({ clockDate, setClockDate }) => {
     const interval = setInterval(() => {
       const date = new Date();
       setClockDate({
-        seconds: date.getSeconds(),
-        minutes: date.getMinutes(),
         hours: date.getHours(),
+        minutes: date.getMinutes(),
+        seconds: date.getSeconds(),
       });
     }, 1000);
     return () => {

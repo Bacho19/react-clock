@@ -11,6 +11,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 15px 0;
     &__setButton {
       margin-left: 8px;
     }
@@ -18,6 +19,7 @@
   &-set {
     background-color: #fff;
     border-radius: 4px;
+    margin-bottom: 15px;
     &__message {
       padding: 14px 12px;
       font-size: 18px;
