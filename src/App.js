@@ -2,37 +2,31 @@ import React, { useState } from "react";
 import AnalogClock from "./components/AnalogClock/AnalogClock";
 import Alarm from "./components/Alarm/Alarm";
 import DigitalClock from "./components/DigitalClock/DigitalClock";
+import ClockSwitch from "./components/ClockSwitch/ClockSwitch";
 import "./App.scss";
-import Button from "./components/Button/Button";
 
-const clockTypes = {
-  DIGITAL: "digital",
-  ANALOG: "analog",
-};
+// const clockTypes = {
+//   DIGITAL: "digital",
+//   ANALOG: "analog",
+// };
 
 function App() {
-  const [clockDate, setClockDate] = useState({});
-  const [clockType, setClockType] = useState(clockTypes.ANALOG);
+  // const [clockType, setClockType] = useState(clockTypes.ANALOG);
+  const [checked, setChecked] = useState(false);
 
-  const handleClockType = (clockType) => {
-    setClockType(clockType);
-  };
+  // const handleClockType = (clockType) => {
+  //   setClockType(clockType);
+  // };
 
   return (
     <>
-      <Button onClick={() => handleClockType(clockTypes.ANALOG)}>Analog</Button>
-      <Button onClick={() => handleClockType(clockTypes.DIGITAL)}>
-        Digital
-      </Button>
+      <ClockSwitch checked={checked} setChecked={setChecked} />
       <div className="clock-wrapper">
-        {clockType === clockTypes.ANALOG && (
-          <AnalogClock clockDate={clockDate} setClockDate={setClockDate} />
-        )}
-        {clockType === clockTypes.DIGITAL && (
-          <DigitalClock clockDate={clockDate} setClockDate={setClockDate} />
-        )}
+        {/* {clockType === clockTypes.ANALOG && <AnalogClock />}
+        {clockType === clockTypes.DIGITAL && <DigitalClock />} */}
+        {checked ? <DigitalClock /> : <AnalogClock />}
       </div>
-      <Alarm clockDate={clockDate} />
+      <Alarm />
     </>
   );
 }

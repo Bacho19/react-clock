@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import Select from "react-select";
 import Button from "../Button/Button";
 import AlarmModal from "../AlarmModal/AlarmModal";
@@ -22,11 +22,35 @@ for (let i = 0; i < 60; i++) {
   });
 }
 
-const Alarm = ({ clockDate }) => {
+const Alarm = () => {
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [isSet, setIsSet] = useState(false);
   const [alarmModalIsOpen, setAlarmModalIsOpen] = useState(false);
+
+  const alarmAudio = new Audio(classicAlarm);
+
+  useLayoutEffect(() => {
+    if (isSet === true) {
+      const clockInterval = setInterval(() => {
+        const date = new Date();
+
+        if (
+          date.getHours() === hours.value &&
+          date.getMinutes() === minutes.value &&
+          date.getSeconds() === 0 &&
+          isSet
+        ) {
+          alarmAudio.play();
+          setAlarmModalIsOpen(true);
+        }
+      }, 1000);
+
+      return () => {
+        clearInterval(clockInterval);
+      };
+    }
+  }, [isSet, alarmAudio, hours.value, minutes.value]);
 
   const handleHours = (selectedHours) => {
     setHours(selectedHours);
@@ -50,20 +74,8 @@ const Alarm = ({ clockDate }) => {
 
   const handleCloseModal = () => {
     setAlarmModalIsOpen((state) => !state);
-  };
-
-  const alarmAudio = new Audio(classicAlarm);
-
-  if (
-    clockDate.hours === hours.value &&
-    clockDate.minutes === minutes.value &&
-    clockDate.seconds === 0 &&
-    isSet
-  ) {
-    alarmAudio.play();
-    setAlarmModalIsOpen(true);
     handleResetAlarm();
-  }
+  };
 
   return (
     <div className="alarm">
@@ -106,6 +118,8 @@ const Alarm = ({ clockDate }) => {
       <AlarmModal
         alarmModalIsOpen={alarmModalIsOpen}
         handleCloseModal={handleCloseModal}
+        hours={hours.label}
+        minutes={minutes.label}
       />
     </div>
   );
