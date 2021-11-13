@@ -1,7 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
+import {
+  clockTypesContext,
+  clockTypes,
+} from "../../contexts/ClockTypesContext";
 import "./ClockSwitch.scss";
 
-const ClockSwitch = ({ checked, setChecked }) => {
+const ClockSwitch = ({ checked, onChange }) => {
+  const clockType = useContext(clockTypesContext);
+
   return (
     <div className="switch-wrapper">
       <label className="switch">
@@ -9,7 +15,13 @@ const ClockSwitch = ({ checked, setChecked }) => {
           className="switch-checkbox"
           checked={checked}
           type="checkbox"
-          onChange={() => setChecked((prev) => !prev)}
+          onChange={() =>
+            onChange(
+              clockType == clockTypes.ANALOG
+                ? clockTypes.DIGITAL
+                : clockTypes.ANALOG
+            )
+          }
         />
         <span className="switch-slider"></span>
       </label>
